@@ -60,3 +60,5 @@ JOIN trainers t ON c.trainer_id = t.trainer_id;
 ## Tools
 
 MySQL, MySQL Workbench
+<img width="533" height="356" alt="Screenshot 2026-11-24 193411" src="https://github.com/user-attachments/assets/4287ba0b-25ad-41e2-9fc9-e70ee96ef619" />
+
