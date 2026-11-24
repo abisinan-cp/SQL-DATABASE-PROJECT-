@@ -1,16 +1,65 @@
-# SQL Part Project: Database Design Using MySQL
+# Gym Management Database (FIT_LIFE)
 
-## Project Overview
+A MySQL relational database for managing a gym: membership plans, members, trainers, classes and class bookings.
 
-In this project, you will design and create a database from scratch using MySQL.
+**Author:** Abisinan.cp
 
-You will choose a real-world business scenario, identify the information that needs to be stored, create the required tables, establish relationships between them, and insert sample data.
+## Database Structure
 
-The objective is to understand how real businesses organize and manage their data using relational databases.
+The `FIT_LIFE` database has 5 tables:
 
-**This is an individual project.**
+| Table | Purpose |
+|---|---|
+| `membership_plans` | Plan types, duration and price |
+| `members` | Gym members and their chosen plan |
+| `trainers` | Trainers and their specialization |
+| `classes` | Scheduled classes and the trainer who teaches them |
+| `bookings` | Which member booked which class, and whether they attended |
 
----
+## Table Relationships
+
+```
+membership_plans ──(plan_id)──► members ──(member_id)──┐
+trainers ──(trainer_id)──► classes ──(class_id)────────┴──► bookings
+```
+
+| Child column | References |
+|---|---|
+| `members.plan_id` | `membership_plans.plan_id` |
+| `classes.trainer_id` | `trainers.trainer_id` |
+| `bookings.member_id` | `members.member_id` |
+| `bookings.class_id` | `classes.class_id` |
+
+`bookings` is a junction table that handles the many-to-many relationship between members and classes.
+
+## Concepts Used
+
+- Primary keys with `AUTO_INCREMENT`
+- Foreign keys for referential integrity
+- `NOT NULL` and `UNIQUE` constraints
+- `JOIN` queries across multiple tables
+
+## How to Run
+
+1. Run the script in MySQL Workbench.
+2. Create tables in this order: `membership_plans`, `trainers`, `members`, `classes`, `bookings`. Parent tables must come before child tables.
+3. Insert the sample data, then verify with `SHOW TABLES;`.
+
+## Sample Query
+
+Show each booking with the member, class and trainer names:
+
+```sql
+SELECT m.full_name, c.class_name, t.trainer_name, b.booking_date, b.attended
+FROM bookings b
+JOIN members m  ON b.member_id  = m.member_id
+JOIN classes c  ON b.class_id   = c.class_id
+JOIN trainers t ON c.trainer_id = t.trainer_id;
+```
+
+## Tools
+
+MySQL, MySQL Workbench
 
 ## 1. Choose Your Business Scenario
 
